@@ -6,7 +6,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { city } = req.query
 
     const weather = await getCurrentWeather(city)
-    console.log('weather---', weather)
 
     res.status(200).json({ weather })
   } catch (error) {
