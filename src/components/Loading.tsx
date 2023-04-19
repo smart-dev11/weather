@@ -4,7 +4,7 @@ import { Stack } from '@mui/system'
 export default function Loading() {
   return (
     <>
-      <Stack spacing={3} px={3} py={4}>
+      <Stack spacing={3} px={2} py={4}>
         <Skeleton variant="rectangular" height={100} />
         <Skeleton variant="rectangular" height={50} />
       </Stack>
