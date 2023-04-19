@@ -5,18 +5,31 @@ const api = axios.create({
   baseURL: config.API_URL
 })
 
-export type Weather = {}
+export type MappedWeather = {
+  icon: string
+  location: string
+  country: string
+  temperature: number
+  feelsLike: number
+  humidity: number
+  windSpeed: number
+}
 
 export async function getCurrentWeather(city?: string | string[]) {
   const { data } = await api.get(`/weather?q=${city || config.DEFAULT_CITY}&appid=${config.API_KEY}`)
 
-  return data
+  return data ? mapResponseProperties(data) : null
 }
 
-export function mapResponseProperties(data: any) {
-  const mapped: Weather = {
+export function mapResponseProperties(data: any): MappedWeather {
+  const mapped: MappedWeather = {
     location: data.name,
-    temperature: Math.round(data.main.temp)
+    country: data.sys.country,
+    temperature: Math.floor(data.main.temp),
+    icon: data.weather[0].icon,
+    feelsLike: Math.floor(data.main.feels_like),
+    humidity: data.main.humidity,
+    windSpeed: data.wind.speed
   }
 
   return mapped

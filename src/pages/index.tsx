@@ -1,7 +1,8 @@
 import SearchForm from '@/components/SearchForm'
+import WeatherCard from '@/components/WeatherCard'
 import config from '@/config'
 import { fetcher } from '@/util/fetcher'
-import { getCurrentWeather } from '@/util/helper'
+import { MappedWeather } from '@/util/helper'
 import { Box, Container, Paper } from '@mui/material'
 import Head from 'next/head'
 import { useState } from 'react'
@@ -11,8 +12,7 @@ function WeatherApp() {
   const [location, setLocation] = useState(config.DEFAULT_CITY)
   const [isSearching, setIsSearching] = useState(false)
 
-  console.log('location', location)
-  const { data: currentWeatherData, error: weatherError } = useSWR(`/api/weather/${location}`, fetcher)
+  const { data: currentWeatherData, error: weatherError } = useSWR<{ weather: MappedWeather }>(`/api/weather/${location}`, fetcher)
 
   const handleSearchWeather = (city: string) => {
     if (!city) return
@@ -20,8 +20,9 @@ function WeatherApp() {
   }
 
   return (
-    <Paper>
+    <Paper sx={{ p: 4, borderRadius: 4 }}>
       <SearchForm handleSearchWeather={handleSearchWeather} />
+      {currentWeatherData && <WeatherCard weather={currentWeatherData?.weather} />}
     </Paper>
   )
 }
