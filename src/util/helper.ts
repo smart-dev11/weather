@@ -16,7 +16,7 @@ export type MappedWeather = {
 }
 
 export async function getCurrentWeather(city?: string | string[]) {
-  const { data } = await api.get(`/weather?q=${city || config.DEFAULT_CITY}&appid=${config.API_KEY}`)
+  const { data } = await api.get(`/weather?q=${city || config.DEFAULT_CITY}&appid=${config.API_KEY}&units=metric`)
 
   return data ? mapResponseProperties(data) : null
 }

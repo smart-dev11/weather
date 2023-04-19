@@ -22,7 +22,7 @@ export default function WeatherCard({ weather }: PropsWithChildren<{ weather: Ma
           <Typography variant="body1">{`${weather.location}, ${weather.country}`}</Typography>
         </Box>
 
-        <Typography variant="h6" color="main">
+        <Typography variant="h4" color="primary">
           {`${weather.temperature} °C`}
         </Typography>
       </Stack>

@@ -1,3 +1,5 @@
+import Error from '@/components/Error'
+import Loading from '@/components/Loading'
 import SearchForm from '@/components/SearchForm'
 import WeatherCard from '@/components/WeatherCard'
 import config from '@/config'
@@ -10,9 +12,12 @@ import useSWR from 'swr'
 
 function WeatherApp() {
   const [location, setLocation] = useState(config.DEFAULT_CITY)
-  const [isSearching, setIsSearching] = useState(false)
 
-  const { data: currentWeatherData, error: weatherError } = useSWR<{ weather: MappedWeather }>(`/api/weather/${location}`, fetcher)
+  const {
+    data: currentWeatherData,
+    error: weatherError,
+    isLoading
+  } = useSWR<{ weather: MappedWeather }>(`/api/weather/${location}`, fetcher)
 
   const handleSearchWeather = (city: string) => {
     if (!city) return
@@ -22,7 +27,7 @@ function WeatherApp() {
   return (
     <Paper sx={{ p: 4, borderRadius: 4 }}>
       <SearchForm handleSearchWeather={handleSearchWeather} />
-      {currentWeatherData && <WeatherCard weather={currentWeatherData?.weather} />}
+      {isLoading ? <Loading /> : weatherError || !currentWeatherData ? <Error /> : <WeatherCard weather={currentWeatherData?.weather} />}
     </Paper>
   )
 }
