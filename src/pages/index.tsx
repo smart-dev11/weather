@@ -19,6 +19,10 @@ function WeatherApp() {
     isLoading
   } = useSWR<{ weather: MappedWeather }>(`/api/weather/${location}`, fetcher)
 
+  console.log('currentWeatherData', currentWeatherData)
+  console.log('weatherError', weatherError)
+  console.log('isLoading', isLoading)
+
   const handleSearchWeather = (city: string) => {
     if (!city) return
     setLocation(city)

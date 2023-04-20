@@ -5,6 +5,7 @@ import { PropsWithChildren } from 'react'
 
 export default function WeatherCard({ weather }: PropsWithChildren<{ weather: MappedWeather }>) {
   const iconTime = weather.icon.replace(/[0-9\n]/g, '')
+  console.log('WeatherCard', weather)
 
   return (
     <Box>
@@ -19,7 +20,7 @@ export default function WeatherCard({ weather }: PropsWithChildren<{ weather: Ma
               loading="lazy"
             />
           </Box>
-          <Typography variant="body1">{`${weather.location}, ${weather.country}`}</Typography>
+          <Typography variant="body1" data-testid="location">{`${weather.location}, ${weather.country}`}</Typography>
         </Box>
 
         <Typography variant="h4" color="primary">

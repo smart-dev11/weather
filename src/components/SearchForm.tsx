@@ -18,8 +18,14 @@ export default function SearchForm({ handleSearchWeather }: Props) {
 
   return (
     <Stack direction="row" spacing={1}>
-      <TextField placeholder="Enter a city name..." value={city} onChange={e => setCity(e.target.value)} fullWidth />
-      <Button onClick={handleClickSearch} sx={{ borderRadius: '50%', p: 2 }}>
+      <TextField
+        placeholder="Enter a city name..."
+        value={city}
+        onChange={e => setCity(e.target.value)}
+        fullWidth
+        inputProps={{ 'data-testid': 'city-input' }}
+      />
+      <Button data-testid="search-button" onClick={handleClickSearch} sx={{ borderRadius: '50%', p: 2 }}>
         <SearchIcon />
       </Button>
     </Stack>
