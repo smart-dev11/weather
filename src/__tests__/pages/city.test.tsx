@@ -1,44 +1,49 @@
-import City from '@/pages/[city]'
-import { act, fireEvent, render, screen } from '@testing-library/react'
-import axios from 'axios'
+import City, { getServerSideProps } from '@/pages/[city]'
+import { render, screen } from '@testing-library/react'
+import { GetServerSidePropsContext } from 'next'
+import { ParsedUrlQuery } from 'querystring'
+import { MOCK_WEATHER } from '../../util/fixture'
 
-const MOCK_WEATHER = {
-  country: 'US',
-  feelsLike: 24,
-  humidity: 66,
-  icon: '01n',
-  location: 'Dallas',
-  temperature: 24,
-  windSpeed: 10.79
-}
+jest.mock('next/router', () => ({
+  useRouter: jest.fn()
+}))
 
-describe('Weather', () => {
-  test('renders app successfully', async () => {
+describe('Render weather for city', () => {
+  it('renders weather successfully', async () => {
     render(<City data={MOCK_WEATHER} />)
     expect(screen.getByTestId('location').textContent).toBe('Dallas, US')
   })
 
-  test('renders error component', async () => {
-    jest.spyOn(axios, 'get').mockRejectedValue({})
-
-    await act(async () => {
-      render(<City data={null} />)
-    })
-    expect(screen.getByTestId('error')).toBeInTheDocument()
+  it('renders weather successfully for night', async () => {
+    render(<City data={{ ...MOCK_WEATHER, icon: '02d' }} />)
+    expect(screen.getByTestId('weather-img').getAttribute('alt')).toBe('02d')
   })
 
-  // test('renders app successfully with input city', async () => {
-  //   jest.spyOn(axios, 'get').mockResolvedValueOnce({
-  //     data: {
-  //       weather: { ...MOCK_WEATHER, location: 'Washington', icon: '02d' }
-  //     }
-  //   })
+  it('renders error component', async () => {
+    render(<City data={null} />)
+    expect(screen.getByTestId('error')).toBeInTheDocument()
+  })
+})
 
-  //   render(<City />)
-  //   await act(async () => {
-  //     fireEvent.input(screen.getByTestId('city-input'), { target: { value: 'Washington' } })
-  //     fireEvent.click(screen.getByTestId('search-button'))
-  //   })
-  //   expect(screen.getByTestId('location').textContent).toBe('Washington, US')
-  // })
+describe('Server Side Props', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it('gets weather successfully', async () => {
+    const context = {
+      params: { city: 'Dallas' } as ParsedUrlQuery
+    }
+    const value: any = await getServerSideProps(context as GetServerSidePropsContext)
+    expect(value.props.data.location).toBe('Dallas')
+    expect(value.props.data.country).toBe('US')
+  })
+
+  it('gets null for wrong city', async () => {
+    const context = {
+      params: { city: 'NonCity' } as ParsedUrlQuery
+    }
+    const value: any = await getServerSideProps(context as GetServerSidePropsContext)
+    expect(value.props.data).toBeNull()
+  })
 })

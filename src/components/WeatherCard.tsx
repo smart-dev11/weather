@@ -1,6 +1,7 @@
 import { MappedWeather } from '@/util/helper'
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Link, Stack, Typography } from '@mui/material'
 import Image from 'next/image'
+import NextLink from 'next/link'
 import { PropsWithChildren } from 'react'
 
 export default function WeatherCard({ weather }: PropsWithChildren<{ weather: MappedWeather }>) {
@@ -18,6 +19,7 @@ export default function WeatherCard({ weather }: PropsWithChildren<{ weather: Ma
               height={60}
               alt={weather.icon}
               loading="lazy"
+              data-testid="weather-img"
             />
           </Box>
           <Typography variant="body1" data-testid="location">{`${weather.location}, ${weather.country}`}</Typography>
@@ -32,6 +34,11 @@ export default function WeatherCard({ weather }: PropsWithChildren<{ weather: Ma
         <Typography variant="body1">{`Humidity ${weather.feelsLike}%`}</Typography>
         <Typography variant="body1">{`Wind Speed: ${weather.feelsLike} m/s`}</Typography>
       </Stack>
+      <Box mt={3} textAlign="right">
+        <Link component={NextLink} href="/">
+          Go Back
+        </Link>
+      </Box>
     </Box>
   )
 }
