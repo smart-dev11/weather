@@ -1,5 +1,5 @@
 import Home from '@/pages'
-import { act, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn()
@@ -8,5 +8,8 @@ jest.mock('next/router', () => ({
 describe('Home', () => {
   it('renders search input successfully', () => {
     render(<Home />)
+
+    expect(screen.getByTestId('search-button')).toBeInTheDocument()
+    expect(screen.getByTestId('city-input')).toBeInTheDocument()
   })
 })

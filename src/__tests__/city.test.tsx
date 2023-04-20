@@ -2,7 +2,7 @@ import City, { getServerSideProps } from '@/pages/[city]'
 import { render, screen } from '@testing-library/react'
 import { GetServerSidePropsContext } from 'next'
 import { ParsedUrlQuery } from 'querystring'
-import { MOCK_WEATHER } from '../../util/fixture'
+import { MOCK_WEATHER } from '../util/fixture'
 
 jest.mock('next/router', () => ({
   useRouter: jest.fn()
