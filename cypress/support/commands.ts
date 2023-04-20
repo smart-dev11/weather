@@ -35,3 +35,4 @@
 //     }
 //   }
 // }
+Cypress.Commands.add('getByDataTestId', (value: string) => cy.get(`[data-testid='${value}']`))

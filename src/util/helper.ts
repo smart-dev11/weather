@@ -15,10 +15,14 @@ export type MappedWeather = {
   windSpeed: number
 }
 
-export async function getCurrentWeather(city?: string | string[]) {
-  const { data } = await api.get(`/weather?q=${city || config.DEFAULT_CITY}&appid=${config.API_KEY}&units=metric`)
+export async function getCurrentWeather(city: string | string[]) {
+  try {
+    const { data } = await api.get(`/weather?q=${city || config.DEFAULT_CITY}&appid=${config.API_KEY}&units=metric`)
 
-  return data ? mapResponseProperties(data) : null
+    return data ? mapResponseProperties(data) : null
+  } catch {
+    return null
+  }
 }
 
 export function mapResponseProperties(data: any): MappedWeather {

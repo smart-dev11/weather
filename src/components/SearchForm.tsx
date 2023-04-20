@@ -1,18 +1,15 @@
-import { Box, Button, IconButton, Stack, TextField } from '@mui/material'
+import { Button, Stack, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 
-interface Props {
-  handleSearchWeather(city: string): void
-}
-
-export default function SearchForm({ handleSearchWeather }: Props) {
+export default function SearchForm() {
+  const router = useRouter()
   const [city, setCity] = useState('')
 
   const handleClickSearch = () => {
     if (city) {
-      handleSearchWeather(city)
-      setCity('')
+      router.push(`/${city}`)
     }
   }
 
