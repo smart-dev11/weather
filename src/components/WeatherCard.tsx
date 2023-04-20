@@ -6,10 +6,9 @@ import { PropsWithChildren } from 'react'
 
 export default function WeatherCard({ weather }: PropsWithChildren<{ weather: MappedWeather }>) {
   const iconTime = weather.icon.replace(/[0-9\n]/g, '')
-  console.log('WeatherCard', weather)
 
   return (
-    <Box>
+    <Box data-testid="weather-card">
       <Stack spacing={3} px={3} py={4}>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
           <Box sx={{ background: iconTime === 'n' ? '#A0AEC0' : '#ECC94B', borderRadius: '50%' }} mr={2}>

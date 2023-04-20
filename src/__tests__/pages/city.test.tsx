@@ -11,11 +11,15 @@ jest.mock('next/router', () => ({
 describe('Render weather for city', () => {
   it('renders weather successfully', async () => {
     render(<City data={MOCK_WEATHER} />)
+
+    expect(screen.getByTestId('weather-card')).toBeInTheDocument()
     expect(screen.getByTestId('location').textContent).toBe('Dallas, US')
   })
 
   it('renders weather successfully for night', async () => {
     render(<City data={{ ...MOCK_WEATHER, icon: '02d' }} />)
+
+    expect(screen.getByTestId('weather-card')).toBeInTheDocument()
     expect(screen.getByTestId('weather-img').getAttribute('alt')).toBe('02d')
   })
 
