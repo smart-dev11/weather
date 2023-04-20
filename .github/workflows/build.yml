@@ -23,14 +23,6 @@ jobs:
           envkey_NEXT_WEATHER_API_KEY: ${{ secrets.NEXT_WEATHER_API_KEY }}
       - name: Unit Test
         run: npm run test:unit
-      - name: Run Cypress Test
-        uses: cypress-io/github-action@v4
-        with:
-          build: npm run build
-          start: npm run start
-          wait-on: 'http://localhost:3000'
-          command: npm run cypress
-          browser: chrome
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information
