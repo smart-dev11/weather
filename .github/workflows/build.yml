@@ -13,6 +13,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install dependencies
         run: npm ci
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v1
+        with:
+          envkey_NEXT_WEATHER_API_KEY: ${{ secrets.NEXT_WEATHER_API_KEY }}
       - name: Unit Test
         run: npm run test:unit
       - name: Run Cypress Test
